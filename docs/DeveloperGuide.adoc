@@ -900,6 +900,12 @@ JUnit is a unit testing framework for the Java programming language
 [[Gradle]] Gradle::
 Gradle is an advanced general purpose build management system based on Groovy and Kotlin. Gradle supports the automatic download and configuration of dependencies or other libraries
 
+[[Vet]] Vet::
+A short form for a veterinary surgeon
+
+[[Vet-tech]] Vet Tech::
+A short form for a veterinary technician
+
 [appendix]
 == Product Survey
 
