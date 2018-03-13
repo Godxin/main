@@ -31,4 +31,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
+
+    /**
+     * Adds an appointment to the list.
+     *
+     * @throws DuplicateAppointmentException if the appointment to add is a duplicate(same date and time of an existing appointment in the list.
+     */
+    public void add(Appointment toAdd) throws DuplicateAppointmentException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateAppointmentException();
+        }
+        internalList.add(toAdd);
+    }
 }
