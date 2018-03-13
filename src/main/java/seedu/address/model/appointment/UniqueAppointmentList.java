@@ -44,4 +44,26 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         }
         internalList.add(toAdd);
     }
+
+    /**
+     * Reschedule the appointment {@code target} in the list with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if the reschedule clashes to another existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new AppointmentNotFoundException();
+        }
+
+        if (!target.equals(editedAppointment) && internalList.contains(editedAppointment)) {
+            throw new AppointmentNotFoundException();
+        }
+
+        internalList.set(index, editedAppointment);
+    }
 }
