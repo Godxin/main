@@ -21,5 +21,14 @@ import seedu.address.model.person.exceptions.AppointmentNotFoundException;
  * @see Appointment#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueAppointmentList {
+public class UniqueAppointmentList implements Iterable<Appointment> {
+    private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Returns true if the list contains an appointment with the same date and time as the given argument.
+     */
+    public boolean contains(Appointment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
 }
