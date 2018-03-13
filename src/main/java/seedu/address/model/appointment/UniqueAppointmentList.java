@@ -10,8 +10,9 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.AppointmentNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
+
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
@@ -35,7 +36,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Adds an appointment to the list.
      *
-     * @throws DuplicateAppointmentException if the appointment to add is a duplicate(same date and time of an existing appointment in the list.
+     * @throws DuplicateAppointmentException if the appointment to add is a duplicate(same date and time)
+     * of an existing appointment in the list.
      */
     public void add(Appointment toAdd) throws DuplicateAppointmentException {
         requireNonNull(toAdd);
@@ -59,11 +61,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         if (index == -1) {
             throw new AppointmentNotFoundException();
         }
-
         if (!target.equals(editedAppointment) && internalList.contains(editedAppointment)) {
             throw new AppointmentNotFoundException();
         }
-
         internalList.set(index, editedAppointment);
     }
 
@@ -74,10 +74,47 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public boolean remove(Appointment toRemove) throws AppointmentNotFoundException {
         requireNonNull(toRemove);
-        final boolean AppointmentFoundAndDeleted = internalList.remove(toRemove);
-        if (!AppointmentFoundAndDeletedFoundAndDeleted) {
-            throw new AppointmentNotFoundException();
+        final boolean appointmentFoundAndDeleted = internalList.remove(toRemove);
+        if (!appointmentFoundAndDeletedFoundAndDeleted) {
+            throw new appointmentNotFoundException();
         }
-        return AppointmentFoundAndDeleted;
+        return appointmentFoundAndDeleted;
+    }
+
+    public void setAppointments(seedu.address.appointment.UniqueAppointmentList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        requireAllNonNull(appointments);
+        final UniqueAppointmentList replacement = new UniqueAppointmentList();
+        for (final Appointment appointment : appointments) {
+            replacement.add(appointment);
+        }
+        setAppointments(replacement);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Appointment> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public Iterator<Appointment> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof seedu.address.model.appointment.UniqueAppointmentList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueAppointmentList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
     }
 }
