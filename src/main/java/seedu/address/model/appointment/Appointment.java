@@ -38,7 +38,7 @@ public class Appointment {
     public Date getDate() {
         return date;
     }
-
+    
     public Time getTime() {
         return time;
     }
