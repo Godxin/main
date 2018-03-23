@@ -445,6 +445,8 @@ Suppose the user wants to schedule a new appointment on 2018-04-01 at 11:00 and 
 
 image::AppointmentClassDemo.png[width="1600"]
 
+Next,
+
 ==== Design Considerations
 
 == Documentation
